@@ -3,5 +3,5 @@
     "Mistral-7B-Instruct-v0.2": "models/Mistral-7B-Instruct-v0.2",
     "Mistral-7B-Instruct-v0.3": "models/Mistral-7B-Instruct-v0.3",
     "Llama-3-8B-Instruct-Gradient-1048k": "/mnt/petrelfs/share_data/liwenhao/Llama-3-8B-Instruct-Gradient-1048k",
-    "Meta-Llama-3.1-8B-Instruct": "/mnt/petrelfs/share_data/wangweiyun/share_ckpt_hf/Meta-Llama-3-8B-Instruct"
+    "Meta-Llama-3.1-8B-Instruct": "/mnt/petrelfs/share_data/liwenhao/Llama-3.1-8B-Instruct"
 }

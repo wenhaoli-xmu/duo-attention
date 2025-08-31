@@ -58,6 +58,21 @@ def parse_args(args=None):
 def build_chat(tokenizer, prompt, model_name):
     if "llama-2" in model_name:
         prompt = f"[INST]{prompt}[/INST]"
+    elif model_name == 'Llama-3-8B-Instruct-Gradient-1048k':
+        chat = [{"role": "user", "content": prompt}]
+        prompt = tokenizer.apply_chat_template(
+            chat, 
+            add_generation_prompt=True, 
+            tokenize=False)
+    elif model_name == 'Meta-Llama-3.1-8B-Instruct':
+        chat = [{"role": "user", "content": prompt}]
+        prompt = tokenizer.apply_chat_template(
+            chat, 
+            add_generation_prompt=True, 
+            tokenize=False)
+    else:
+        raise NotImplementedError
+
     return prompt
 
 
@@ -125,11 +140,15 @@ def get_pred(
         )
         simulation_start_idx = input.input_ids.shape[-1] - decoding_simulation_length
         with torch.no_grad():
+
+            # pre-filling
             output = model(
                 input_ids=input.input_ids[:, :simulation_start_idx],
                 past_key_values=None,
                 use_cache=True,
             )
+
+            # greedy decoding
             past_key_values = output.past_key_values
             if decoding_simulation_length > 0:
                 for idx, input_id in enumerate(
@@ -147,8 +166,7 @@ def get_pred(
                 outputs = model(
                     input_ids=pred_token_idx,
                     past_key_values=past_key_values,
-                    use_cache=True,
-                )
+                    use_cache=True)
 
                 past_key_values = outputs.past_key_values
                 pred_token_idx = outputs.logits[:, -1, :].argmax(dim=-1).unsqueeze(1)
@@ -158,7 +176,11 @@ def get_pred(
 
         pred = tokenizer.decode(generated_content, skip_special_tokens=True)
         pred = post_process(pred, model_name)
+
+        from pygments.console import colorize
         print(f"Prediction: {pred}")
+        print(colorize("green", "#" * 80))
+
         preds.append(
             {
                 "pred": pred,
@@ -204,6 +226,7 @@ def load_model_and_tokenizer(path, model_name):
         print(
             f"Loading attention pattern from {args.attn_load_dir} with sparsity {args.sparsity}"
         )
+
         full_attention_heads, sink_size, recent_size = load_attn_pattern(
             args.attn_load_dir
         )

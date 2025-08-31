@@ -329,6 +329,7 @@ def load_attn_pattern(attn_load_dir):
         dtype=float,
         delimiter="\t",
     )
+
     full_attention_heads = np.clip(full_attention_heads, 0, 1)
     config = json.load(open(os.path.join(attn_load_dir, "config.json")))
     sink_size = config["sink_size"]

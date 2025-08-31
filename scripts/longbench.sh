@@ -7,7 +7,7 @@ sparsity=$4
 srun -p Intern5 --quotatype spot -N1 -n1 --gpus-per-task 1 \
 python -u eval/LongBench/pred.py \
     --model $model --task $task \
-    --method streaming \
+    --method duo_attn \
     --attn_load_dir ${attn_pattern} \
     --sparsity $sparsity \
     --sink_size 64 \

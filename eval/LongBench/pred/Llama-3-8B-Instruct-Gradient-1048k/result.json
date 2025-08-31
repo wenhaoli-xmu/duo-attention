@@ -1,4 +1,5 @@
 {
+    "2wikimqa-full.jsonl": 28.86,
     "triviaqa-duo_attn-pattern-lr=0.02-reg=0.05-ctx=1000_32000-multi_passkey10-sp-0.0.jsonl": 87.7,
     "triviaqa-duo_attn-pattern-lr=0.02-reg=0.05-ctx=1000_32000-multi_passkey10-sp-0.5.jsonl": 86.85,
     "triviaqa-duo_attn-pattern-lr=0.02-reg=0.05-ctx=1000_32000-multi_passkey10-sp-0.75.jsonl": 78.32,
